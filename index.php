@@ -9,10 +9,12 @@
 </head>
 <body>
 <h1>Backend für 12fjkp.de</h1>
-<a href="login.php">Login</a>
-<a href="logout.php">Logout</a>
-<a href="event.php">Event Anmeldung</a>
-<a href="admin.php">Admin</a>
-<a href="record.php">Personalakten</a>
+<div>
+    <a href="event.php">Event Anmeldung</a>
+    <a href="admin.php">Admin</a>
+    <a href="record.php">Personalakten</a>
+    <a href="login.php">Login</a>
+    <a href="logout.php">Logout</a>
+</div>
 </body>
 </html>
