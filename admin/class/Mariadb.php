@@ -10,23 +10,6 @@ class Mariadb
     private $pdo;
 
 
-
-    public function testDatabase(): string
-    {
-        try {
-            // set the PDO error mode to exception
-            $this->pdo()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
-        } catch(PDOException $e) {
-           $stmt = "Connection failed: " . $e->getMessage();
-        }
-        if (isset($stmt)){
-            return $stmt;
-        }else{
-            return "ist nicht da";
-        }
-    }
-
     public function generateAdmin(string $username, $password, $rank) :string
     {
         $res = $this->pdo()->prepare("INSERT INTO admin_user(username, password, rank) VALUES (:user, :pass, :rank)");
@@ -49,6 +32,18 @@ class Mariadb
         $res->bindValue("steam", $steamId);
         $res->execute();
         return "<h3>Der neue Nutzer ".$username." wurde hinzugefügt!";
+    }
+    public function registerMember(string $username, string $ts3, string $dc, string $passwrd) :string
+    {
+        $res = $this->pdo()->prepare("INSERT INTO member(username, ts3, discord_name, password, activated) VALUES (:user, :ts3, :dc,:passwrd, :act)");
+        $res->bindValue("user", $username);
+        $res->bindValue("ts3", $ts3);
+        $res->bindValue("dc", $dc);
+        $res->bindValue("passwrd", $passwrd);
+        $res->bindValue("act", "0");
+        $res->execute();
+        echo "<h3>Willkommen ".$username." du bist nun auf der 12fjkp Website angemeldet!</h3>";
+        return "";
     }
 
 
@@ -116,11 +111,11 @@ class Mariadb
         return null;
     }
 
-    public function deleteMember(int $id)
+    public function deleteMember(int $id): void
     {
         $this->pdo()->query("DELETE FROM member WHERE id = ".$id);
     }
-    public function changeRank(int $id, int $rank)
+    public function changeRank(int $id, int $rank): void
     {
         $this->pdo()->query("UPDATE member SET user_rank = ".$rank." WHERE id = ".$id);
     }
@@ -164,7 +159,7 @@ class Mariadb
 
 
 
-    function createQuestion(ForumQuestion $forumQuestion)
+/*    function createQuestion(ForumQuestion $forumQuestion)
     {
         $res = $this->pdo()->prepare("INSERT INTO forum_quest(quest, sort, head, userID) VALUES (:quest, :sort, :head, :usr)");
         $res->bindValue("quest", $forumQuestion->getQuestion());
@@ -186,6 +181,7 @@ class Mariadb
     /**
      * @return ForumAnswer[]
      */
+    /*
     function listAnswers(int $questionId)
     {
         $res = $this->pdo()->query("SELECT * FROM forum_reply WHERE questionId = ".$questionId." ORDER BY ID DESC");
@@ -214,7 +210,7 @@ class Mariadb
             return null;
         }
 
-    }
+    }*/
 
     function listUser(): array
     {
