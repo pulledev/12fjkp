@@ -3,10 +3,7 @@
 require __DIR__ . "/init.php";
 
 Head::printHead("Registrieren -12fjkp", "style/register.css");
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
-if (!$id) {
-    header("Location: login.php");
-}
+
 ?>
 <body>
 <h1>Registrieren</h1>
