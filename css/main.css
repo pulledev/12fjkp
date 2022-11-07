@@ -1,0 +1,110 @@
+/*
+ * 12. Fallschirmjägerkompanie
+ *
+ * (c) 2022 Florentin Möhle and Paul Treier <admin@12fjkp.de>
+ *
+ * For licensing conditions, please refer to 12fjkp.de/index.html
+ *
+ */
+
+:root {
+	--bg: #1d1d1d;
+	--bg2: #1d2021;
+	--fg: #ebdbb2;
+	--hilight: #fe8019;
+}
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: var(--bg);
+	color: var(--fg);
+	font-family: Fira Code;
+
+}
+
+h1, h2, h3 {
+	font-family: Bebas Neue;
+}
+
+a {
+	color: var(--hilight);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* NAVIGATION */
+
+#navbar {
+	background-color: var(--bg2);
+	width: 100vw;
+	overflow: auto;
+	position: fixed;
+	z-index: 10
+	
+}
+
+#nav-left, #nav-right {
+	display: inline-block;
+}
+
+#nav-right {
+	float: right;
+	padding-right: 10px;
+}
+
+.nav-button, .login-button, .mitmachen-button {
+	display: inline-block;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.nav-button > * {
+	display: inline-block;
+}
+
+/* WELCOME */
+
+#welcome {
+	height: 100vh;
+}
+
+.video-background {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+#welcome-content {
+	position: absolute;
+	bottom: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 9;
+	display:flex;
+	justify-content: center;
+	width: 100vw;
+}
+
+#welcome-content > div > * {
+	display: inline-block;
+}
+
+h1 {
+	font-size: 7vw;
+}
+
+#welcome-content > div > div > p {
+	font-family: Bebas Neue;
+	font-size: 4vw;
+	padding-left: 20px;
+}
+
+#welcome-content > div > img {
+	width: 13vw;
+}
