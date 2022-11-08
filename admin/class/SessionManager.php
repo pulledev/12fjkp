@@ -25,9 +25,20 @@ class SessionManager
 
         if (isset($_SESSION["userID"])) {
             $userID = $_SESSION["userID"];
-            error_log("fffffffffffffffffgetLoggedInUser_Check_1");
             if ($userID) {
                 $this->loggedInUser = $this->mariadb->findUser($userID);
+            }
+        }
+        return $this->loggedInUser;
+    }
+    public function getLoggedInAdmin(): ?Admin
+    {
+        error_log("getLoggedInAdmin");
+
+        if (isset($_SESSION["userID"])) {
+            $adminID = $_SESSION["adminID"];
+            if ($adminID) {
+                $this->loggedInUser = $this->mariadb->findAdmin($adminID);
             }
         }
         return $this->loggedInUser;

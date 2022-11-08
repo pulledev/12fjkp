@@ -88,18 +88,29 @@ class Mariadb
 
     public function findUserByName(string $username, string $password): ?User
     {
-        $stmt = $this->pdo()->prepare("SELECT * FROM admin_user WHERE username =:usr AND password =:pwd");
+        $stmt = $this->pdo()->prepare("SELECT * FROM member WHERE username =:usr AND password =:pwd");
         $stmt->bindParam(":usr", $username, PDO::PARAM_STR);
         $stmt->bindParam(":pwd", $password, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch();
         if ($row) {
-            return new User($row["username"], $row["id"], $row["rank"]);
+            return new User($row["username"], $row["id"], $row["post"], $row["position"], $row["user_rank"], $row["special_post"], $row["url"], $row["steam_id"], $row["discord_name"], $row["ts3"], $row["activated"]);
         }
         return null;
     }
 
     public function findUser(int $id): ?User
+    {
+        $stmt = $this->pdo()->prepare("SELECT * FROM member WHERE id = :value");
+        $stmt->bindParam(":value", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if ($row) {
+            return new User($row["username"], $row["id"], $row["post"], $row["position"], $row["user_rank"], $row["special_post"], $row["url"], $row["steam_id"], $row["discord_name"], $row["ts3"], $row["activated"]);
+        }
+        return null;
+    }
+    public function findAdmin(int $id): ?Admin
     {
         $stmt = $this->pdo()->prepare("SELECT * FROM admin_user WHERE id = :value");
         $stmt->bindParam(":value", $id, PDO::PARAM_INT);
