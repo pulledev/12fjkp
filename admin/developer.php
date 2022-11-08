@@ -4,7 +4,7 @@ $id = "true";
 if (!$id) {
     header("Location: login.php");
 }
-$user = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+$user = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 
 if($user->getRank() === 4)
 {
@@ -19,7 +19,7 @@ if($user->getRank() === 4)
 
 Head::printHead("Dev Tools - Admin Panel", "developer.css");
 
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if(!$id)
 {
     header("Location: login.php");

@@ -11,7 +11,9 @@ $id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
     <input type="text" placeholder="password" name="passwd">
     <input type="submit" name="submit">
 </form>
+
 <?php
+
     if (isset($_POST["submit"])){
         $rawPassword = $_POST["passwd"];
         $username = $_POST["usr"];

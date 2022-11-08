@@ -6,7 +6,7 @@ if (!$id) {
 }
 Head::printHead("Events - Admin Panel","index.css");
 
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if(!$id)
 {
     header("Location: login.php");

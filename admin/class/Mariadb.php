@@ -98,6 +98,18 @@ class Mariadb
         }
         return null;
     }
+    public function findAdminByName(string $username, string $password): ?Admin
+    {
+        $stmt = $this->pdo()->prepare("SELECT * FROM admin_user WHERE username =:usr AND password =:pwd");
+        $stmt->bindParam(":usr", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":pwd", $password, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Admin($row["username"], $row["id"], $row["rank"]);
+        }
+        return null;
+    }
 
     public function findUser(int $id): ?User
     {
@@ -112,12 +124,12 @@ class Mariadb
     }
     public function findAdmin(int $id): ?Admin
     {
-        $stmt = $this->pdo()->prepare("SELECT * FROM admin_user WHERE id = :value");
-        $stmt->bindParam(":value", $id, PDO::PARAM_INT);
+        $stmt = $this->pdo()->prepare("SELECT * FROM admin_user WHERE id =:id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
         if ($row) {
-            return new User($row["username"], $row["id"], $row["rank"]);
+            return new Admin($row["username"], $row["id"], $row["rank"]);
         }
         return null;
     }

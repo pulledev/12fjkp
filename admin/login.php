@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . "/init.php";
-
 Head::printHead("Anmelden - Admin Panel","index.css");
 ?>
 
@@ -22,12 +21,14 @@ Head::printHead("Anmelden - Admin Panel","index.css");
             $username = $_POST["username"];
             $password = AdminPanelServices::getInstance()->getTools()->hashString($rawPassword);
 
-            $checkUserByName = AdminPanelServices::getInstance()->getMariadb()->findUserByName($username,$password);
+            $checkAdminByName = AdminPanelServices::getInstance()->getMariadb()->findAdminByName($username,$password);
 
-            if ($checkUserByName) {
-                $_SESSION["userID"] = $checkUserByName->getId();
+            if ($checkAdminByName) {
+                $_SESSION["adminID"] = $checkAdminByName->getId();
                 //error_log $_Session["userID"];
+                //echo $_SESSION["adminID"];
                 header('Location: index.php');
+
             } else {
                 echo '<h3>Der Benutzername oder/und das Passwort ist/sind falsch</h3>';
             }

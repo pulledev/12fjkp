@@ -1,12 +1,13 @@
 <?php
 require __DIR__ . "/init.php";
-$id = "true";
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if (!$id) {
-    header("Location: login.php");
+    header("Location: /admin/login.php");
 }
+
 Head::printHead("Mitglieder - Admin Panel","index.css");
 
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if(!$id)
 {
     header("Location: login.php");

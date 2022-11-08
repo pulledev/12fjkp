@@ -4,7 +4,7 @@ class Navbar
 {
     static function printNavbar()
     {
-        $user = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+        $user = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
         ?>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: #14603d;">
             <div class="container-fluid"><a class="navbar-brand" href="#" style="color: var(--bs-gray-400);"><img
@@ -39,7 +39,7 @@ class Navbar
                         <li class="nav-item"><a class="nav-link" href="developer.php" style="color: #7bcda7;">Fehler melden!</a></li>
                     </ul>
                     <?php
-                    $nameFromUser = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser()->getUsername();
+                    $nameFromUser = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin()->getUsername();
                     ?>
                     <div class="ms-auto" style="margin-right: 39px;">
 

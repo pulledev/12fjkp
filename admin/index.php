@@ -1,17 +1,14 @@
 <?php
 require __DIR__ . "/init.php";
-
 Head::printHead("Home - Admin Panel", "index.css");
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
-
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if (!$id) {
-    header("Location: login.php");
+    header("Location: /admin/login.php");
 }
 ?>
 <body>
 <?php
 Navbar::printNavbar();
-
 ?>
 <div class="container">
     <div class="row">
@@ -48,14 +45,12 @@ Navbar::printNavbar();
                     <tr>
                         <td><?php echo $admin->getId() ?></td>
                         <td><?php echo $admin->getUsername() ?></td>
-                        <td> <?php echo $rank ?></td>
+                        <td><?php echo $rank ?></td>
                     </tr>
                     <?php
                 }
             }
-
             ?>
-
             </tbody>
         </table>
     </div>

@@ -13,13 +13,13 @@ class Admin
     /**
      * User constructor.
      * @param string $username
-     * @param int $ID
+     * @param int $id
      * @param int $rank
      */
-    public function __construct(string $username, int $ID, int $rank)
+    public function __construct(string $username, int $id, int $rank)
     {
         $this->username = $username;
-        $this->id = $ID;
+        $this->id = $id;
         $this->rank = $rank;
     }
 

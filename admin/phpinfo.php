@@ -6,7 +6,7 @@ if (!$id) {
 }
 Head::printHead("PHP INFO - Admin Panel", "developer.css");
 
-$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInUser();
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if(!$id)
 {
     header("Location: login.php");

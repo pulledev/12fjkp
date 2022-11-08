@@ -3,6 +3,7 @@ session_start();
 class SessionManager
 {
     private Mariadb $mariadb;
+    private ?Admin $loggedInAdmin = null;
     private ?User $loggedInUser = null;
 
     /**
@@ -35,12 +36,12 @@ class SessionManager
     {
         error_log("getLoggedInAdmin");
 
-        if (isset($_SESSION["userID"])) {
+        if (isset($_SESSION["adminID"])) {
             $adminID = $_SESSION["adminID"];
             if ($adminID) {
-                $this->loggedInUser = $this->mariadb->findAdmin($adminID);
+                $this->loggedInAdmin = $this->mariadb->findAdmin($adminID);
             }
         }
-        return $this->loggedInUser;
+        return $this->loggedInAdmin;
     }
 }
