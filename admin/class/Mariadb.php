@@ -177,8 +177,29 @@ class Mariadb
         $this->pdo()->query("DELETE FROM admin_user WHERE id = ".$id);
     }
 
+    public function addEvent($title, $date, $type, $text){
+        $author = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin()->getId();
+        $stmt = $this->pdo()->prepare("INSERT INTO events(title, date, type, text, author) VALUES (:title, :date, :type, :text, :author)");
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam("date", $date  );
+        $stmt->bindParam("type", $type);
+        $stmt->bindParam("text", $text);
+        $stmt->bindParam("author", $author);
+        $stmt->execute();
+        return null;
+    }
 
+    public function listEvents(): array
+    {
+        $res = $this->pdo()->query("SELECT * FROM events ORDER BY id DESC");
+        $results = [];
+        while ($row = $res->fetch()) {
+            $results[] = new Events($row["id"], $row["title"], $row["date"], $row["type"], $row["text"], $row["author"]);
+        }
 
+        return $results;
+
+    }
 
 
 

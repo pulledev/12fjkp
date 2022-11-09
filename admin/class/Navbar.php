@@ -4,6 +4,7 @@ class Navbar
 {
     static function printNavbar()
     {
+
         $user = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
         ?>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: #14603d;">

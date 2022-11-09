@@ -660,7 +660,8 @@ class Modal
             $post = $_POST["changeSpecialPostPost"];
             AdminPanelServices::getInstance()->getMariadb()->changeSpecialPost($id, $post);
             ?>
-            <divclass="alert alert-success" role="alert">Die URL des Users wurde erfolgreich geändert! <a href="member.php">Neuladen</a> </div>
+            <divclass="alert alert-success" role="alert">Die URL des Users wurde erfolgreich geändert! <a
+                    href="member.php">Neuladen</a> </div>
             <?php
             //header('Location: index.php');
         }
@@ -903,65 +904,56 @@ class Modal
     }
 
 
-
-
     public function spawnAddEvent(): void
     {
         ?>
-
-        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" id="modal_create_event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal_create_event" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Neuen Admin hinzufügen</h4>
+                        <h5 class="modal-title" id="modal_create_event">Modal title</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form method="post" action="#">
-                            <input class="form-control" type="text" name="username_gen_admin" placeholder="Nutzernamen"
-                                   id="username_gen_admin">
-                            <small class="form-text">Trage hier den Nutzernamen des Admins ein</small>
-                            <input class="form-control" name="password_gen_admin" id="password_gen_admin"
-                                   value="<?php echo $generated_password ?>" type="password" placeholder="Passwort">
-                            <small class="form-text">Trage hier das Passwort des Admins ein! Passwort:
-                                <b><?php echo $generated_password ?></b></small>
-                            <select class="form-select" name="rank_gen_admin">
-                                <option value="0" selected="">Rolle</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Spieß</option>
-                                <option value="3">Developer</option>
-                                <option value="4">Super Admin</option>
+                            <input class="form-control" type="text" name="title" placeholder="Titel" id="username_gen_admin">
+                            <small class="form-text">Trage hier den Titel des Events ein</small>
+                            <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date" placeholder="Titel" id="username_gen_admin">
+                            <small class="form-text">Trage hier das Datum des Events ein</small>
+                            <select class="form-select" name="type">
+                                <option disabled selected="">Rolle</option>
+                                <option value="1">Ausbildung</option>
+                                <option value="2">Hauptevent</option>
+                                <option value="3">Training</option>
+                                <option value="4">Sonstiges</option>
                             </select>
-                            <small class="form-text">Trage hier die Rolle des Admins ein</small>
+                            <small class="form-text">Trage hier den Typ des Events ein</small>
+                            <textarea name="text" id="summernote" cols="30" rows="10"></textarea>
+                            <script>
+                                $('#summernote').summernote({
+                                    placeholder: 'Tippe hier den Inhalt des Events ein',
+                                    tabsize: 2,
+                                    height: 100
+                                });
+                            </script>
+
+
                             <div class="modal-footer">
                                 <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit" name="submit_gen_admin">Erstellen</button>
-
+                                <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
                             </div>
                         </form>
-                    </div>
                 </div>
             </div>
         </div>
 
-
         <?php
-        if (isset($_POST["submit_gen_admin"])) {
-            $username = $_POST["username_gen_admin"];
-            $password = $_POST["password_gen_admin"];
-            $rank = $_POST["rank_gen_admin"];
-
-            $safe_password = AdminPanelServices::getInstance()->getTools()->hashString($username);
-
-
-            if ($rank == 0) {
-                echo "<h3>Du musst etwas anderes als Rolle auswählen!</h3>";
-            } else {
-                AdminPanelServices::getInstance()->getMariadb()->generateAdmin($username, $safe_password, $rank);
-                ?>
-                <div class="alert alert-success" role="alert">Der Admin wurde hinzugefügt! :)</div>
-                <?php
-            }
+        if (isset($_POST["submit"])) {
+            $title = $_POST["title"];
+            $text = $_POST["text"];
+            $date = $_POST["date"];
+            $type = $_POST["type"];
+            AdminPanelServices::getInstance()->getMariadb()->addEvent($title,$date,$type,$text);
         }
 
 

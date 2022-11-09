@@ -46,7 +46,7 @@ Navbar::printNavbar();
     <?php
     AdminPanelServices::getInstance()->getTables()->spawnMemberTable();
     ?>
-    </div>
+</div>
 
 <?php
 AdminPanelServices::getInstance()->getModal()->spawnAddUser(); //modal-1

@@ -1,10 +1,11 @@
 <?php
 require __DIR__ . "/init.php";
-$id = "true";
+$id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if (!$id) {
-    header("Location: login.php");
+    header("Location: /admin/login.php");
 }
-Head::printHead("Events - Admin Panel","index.css");
+
+Head::printHead("Mitglieder - Admin Panel","index.css");
 
 $id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
 if(!$id)
@@ -25,50 +26,18 @@ Navbar::printNavbar();
     </div>
 </div>
 
-
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Titel</th>
-            <th>Inhalt</th>
-            <th>Datum</th>
-            <th>Ersteller</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $admins = null;
-        if (empty($admins)) {
-            echo "<h4 class='text-center'>Zurzeit gibt es keine Events</h4>";
-        } else {
-            $cnt = 0;
-            foreach ($admins as $admin) {
-                $rank = null;
-                ?>
-                <tr>
-                    <td><?php echo $admin->getId() ?></td>
-                    <td><?php echo $admin->getUsername() ?></td>
-                    <td> <?php echo $rank ?></td>
-                </tr>
-                <?php
-            }
-        }
-
-        ?>
-
-        </tbody>
-    </table>
+<div class="d-grid gap-2 col-6 mx-auto">
+    <div class="d-grid gap-2"><button class="btn btn-primary" type="button" data-bs-target="#modal_create_event" data-bs-toggle="modal" style="padding-left: 80px;padding-right: 80px;padding-top: 6px;margin: 0;filter: blur(0px);">Event erstellen</button></div>
+    <div class="d-grid gap-2"><button class="btn btn-primary" type="button" data-bs-target="#modal_create_event" data-bs-toggle="modal" style="padding-left: 80px;padding-right: 80px;padding-top: 6px;margin: 0;filter: blur(0px);">Benutzer hinzufügen</button></div>
 </div>
-<div id="summernote"></div>
-<script>
-    $('#summernote').summernote({
-        placeholder: 'Tippe hier den Inhalt des Events ein',
-        tabsize: 2,
-        height: 100
-    });
-</script>
+
+
+<?php
+AdminPanelServices::getInstance()->getModal()->spawnAddEvent();
+?>
+
+
+
 
 </body>
 
