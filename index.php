@@ -10,6 +10,7 @@ if (!$id) {
 ?>
 <body>
 <h1>Backend für 12fjkp.de</h1>
+
 <div>
     <a href="event.php">Event Anmeldung</a>
     <a href="/admin">Admin</a>

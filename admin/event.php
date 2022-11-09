@@ -39,13 +39,13 @@ Navbar::printNavbar();
         </thead>
         <tbody>
         <?php
-        $admins = AdminPanelServices::getInstance()->getMariadb()->listAdminUser();
+        $admins = null;
         if (empty($admins)) {
-            echo "<h4 class='text-center'>Fehlercode 2</h4>";
+            echo "<h4 class='text-center'>Zurzeit gibt es keine Events</h4>";
         } else {
             $cnt = 0;
             foreach ($admins as $admin) {
-                $rank = AdminPanelServices::getInstance()->getTools()->decodeAdminRank($admin->getRank())
+                $rank = null;
                 ?>
                 <tr>
                     <td><?php echo $admin->getId() ?></td>
@@ -62,5 +62,5 @@ Navbar::printNavbar();
     </table>
 </div>
 
-
 </body>
+

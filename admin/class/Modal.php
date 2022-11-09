@@ -901,4 +901,73 @@ class Modal
 
         <?php
     }
+
+
+
+
+    public function spawnAddEvent(): void
+    {
+        ?>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Neuen Admin hinzufügen</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="#">
+                            <input class="form-control" type="text" name="username_gen_admin" placeholder="Nutzernamen"
+                                   id="username_gen_admin">
+                            <small class="form-text">Trage hier den Nutzernamen des Admins ein</small>
+                            <input class="form-control" name="password_gen_admin" id="password_gen_admin"
+                                   value="<?php echo $generated_password ?>" type="password" placeholder="Passwort">
+                            <small class="form-text">Trage hier das Passwort des Admins ein! Passwort:
+                                <b><?php echo $generated_password ?></b></small>
+                            <select class="form-select" name="rank_gen_admin">
+                                <option value="0" selected="">Rolle</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Spieß</option>
+                                <option value="3">Developer</option>
+                                <option value="4">Super Admin</option>
+                            </select>
+                            <small class="form-text">Trage hier die Rolle des Admins ein</small>
+                            <div class="modal-footer">
+                                <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit" name="submit_gen_admin">Erstellen</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <?php
+        if (isset($_POST["submit_gen_admin"])) {
+            $username = $_POST["username_gen_admin"];
+            $password = $_POST["password_gen_admin"];
+            $rank = $_POST["rank_gen_admin"];
+
+            $safe_password = AdminPanelServices::getInstance()->getTools()->hashString($username);
+
+
+            if ($rank == 0) {
+                echo "<h3>Du musst etwas anderes als Rolle auswählen!</h3>";
+            } else {
+                AdminPanelServices::getInstance()->getMariadb()->generateAdmin($username, $safe_password, $rank);
+                ?>
+                <div class="alert alert-success" role="alert">Der Admin wurde hinzugefügt! :)</div>
+                <?php
+            }
+        }
+
+
+        ?>
+
+
+        <?php
+    }
 }
