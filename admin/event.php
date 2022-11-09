@@ -61,6 +61,14 @@ Navbar::printNavbar();
         </tbody>
     </table>
 </div>
+<div id="summernote"></div>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Tippe hier den Inhalt des Events ein',
+        tabsize: 2,
+        height: 100
+    });
+</script>
 
 </body>
 
