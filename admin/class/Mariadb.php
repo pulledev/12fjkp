@@ -188,6 +188,17 @@ class Mariadb
         $stmt->execute();
         return null;
     }
+    public function findEvent(int $id): ?Events
+    {
+        $stmt = $this->pdo()->prepare("SELECT * FROM events WHERE id =:id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Events($row["id"], $row["title"], $row["date"], $row["type"], $row["text"],$row["author"]);
+        }
+        return null;
+    }
 
     public function listEvents(): array
     {

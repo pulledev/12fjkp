@@ -57,7 +57,7 @@ Navbar::printNavbar();
         </tr>
         </tbody>
     </table>
-    <img src="/pictures/dev_tools_logo.png" alt="logo devtools" style="width: 100%; height: 30rem; margin-top: 5rem">
+    <img src="/admin/pictures/dev_tools_logo.png" alt="logo devtools" style="width: 100%; height: 30rem; margin-top: 5rem">
 </div>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>

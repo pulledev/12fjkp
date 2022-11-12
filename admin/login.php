@@ -7,7 +7,7 @@ Head::printHead("Anmelden - Admin Panel","index.css");
 
 <div class="d-flex" style="height: 100vh;background: url(&quot;assets/img/arma%20pic%209jgk.jpg&quot;) center / cover repeat;">
     <div class="container-fluid" style="width: 65vw;">
-        <picture class="d-flex d-sm-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-xxl-center"><img src="assets/img/9.jgk.png"></picture>
+        <picture class="d-flex d-sm-flex d-xxl-flex justify-content-center justify-content-sm-center justify-content-xxl-center"><img src="assets/img/12fjkp.png"></picture>
         <h1 class="text-center" style="padding-top: 40px;padding-bottom: 64px;color: rgb(255,255,255);">Admin Panel Login</h1>
         <form method="post" action="#">
             <input class="form-control" type="text" style="margin-bottom: 3vh;" placeholder="Username" name="username">

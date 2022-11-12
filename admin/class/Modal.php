@@ -908,41 +908,43 @@ class Modal
     {
         ?>
         <div class="modal fade" id="modal_create_event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal_create_event" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal_create_event">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="#">
-                            <input class="form-control" type="text" name="title" placeholder="Titel" id="username_gen_admin">
-                            <small class="form-text">Trage hier den Titel des Events ein</small>
-                            <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date" placeholder="Titel" id="username_gen_admin">
-                            <small class="form-text">Trage hier das Datum des Events ein</small>
-                            <select class="form-select" name="type">
-                                <option disabled selected="">Rolle</option>
-                                <option value="1">Ausbildung</option>
-                                <option value="2">Hauptevent</option>
-                                <option value="3">Training</option>
-                                <option value="4">Sonstiges</option>
-                            </select>
-                            <small class="form-text">Trage hier den Typ des Events ein</small>
-                            <textarea name="text" id="summernote" cols="30" rows="10"></textarea>
-                            <script>
-                                $('#summernote').summernote({
-                                    placeholder: 'Tippe hier den Inhalt des Events ein',
-                                    tabsize: 2,
-                                    height: 100
-                                });
-                            </script>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_create_event">Event hinzufügen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="#">
+                        <input class="form-control" type="text" name="title" placeholder="Titel"
+                               id="username_gen_admin">
+                        <small class="form-text">Trage hier den Titel des Events ein</small>
+                        <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                               placeholder="Titel" id="username_gen_admin">
+                        <small class="form-text">Trage hier das Datum des Events ein</small>
+                        <select class="form-select" name="type">
+                            <option disabled selected="">Event Typ</option>
+                            <option value="1">Ausbildung</option>
+                            <option value="2">Hauptevent</option>
+                            <option value="3">Training</option>
+                            <option value="4">Sonstiges</option>
+                        </select>
+                        <small class="form-text">Trage hier den Typ des Events ein</small>
+                        <textarea name="text" id="summernote" cols="30" rows="10"></textarea>
+                        <script>
+                            $('#summernote').summernote({
+                                placeholder: 'Tippe hier den Inhalt des Events ein',
+                                tabsize: 2,
+                                height: 100
+                            });
+                        </script>
 
 
-                            <div class="modal-footer">
-                                <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
-                            </div>
-                        </form>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -953,7 +955,7 @@ class Modal
             $text = $_POST["text"];
             $date = $_POST["date"];
             $type = $_POST["type"];
-            AdminPanelServices::getInstance()->getMariadb()->addEvent($title,$date,$type,$text);
+            AdminPanelServices::getInstance()->getMariadb()->addEvent($title, $date, $type, $text);
         }
 
 
@@ -962,4 +964,151 @@ class Modal
 
         <?php
     }
+
+public function spawnJoinEvent($event_id, $user_id): void
+{
+    //state:  0=yes 1=maybe 2=no 3=null
+    $event = AdminPanelServices::getInstance()->getMariadb()->findEvent($event_id);
+    $user = AdminPanelServices::getInstance()->getMariadb()->findUser($user_id);
+    ?>
+    <div class="modal fade" id="modal_join_event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal_join_event" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_join_event"><?php echo "Anmeldung für" . $event->getTitle(); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                           placeholder="Titel" id="username_gen_admin">
+                    <small class="form-text">Trage hier Slotwünsche etc. ein</small>
+                    <?php
+                    if ($state === 1) {
+                        ?>
+                        <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                               placeholder="Titel" id="username_gen_admin">
+                        <small class="form-text">Trage hier deine Verspätungszeit und evtl. einen Grund ein</small>
+                        <?php
+                    }
+                    ?>
+                    <div class="modal-footer">
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    if (isset($_POST["submit"])) {
+        $title = $_POST["title"];
+        $text = $_POST["text"];
+        $date = $_POST["date"];
+        $type = $_POST["type"];
+        AdminPanelServices::getInstance()->getMariadb()->addEvent($title, $date, $type, $text);
+    }
+
+}
+
+public function spawnJoinEventMaybe($event_id, $user_id): void
+{
+    //state:  0=yes 1=maybe 2=no 3=null
+    $event = AdminPanelServices::getInstance()->getMariadb()->findEvent($event_id);
+    $user = AdminPanelServices::getInstance()->getMariadb()->findUser($user_id);
+    ?>
+    <div class="modal fade" id="modal_join_event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="modal_join_event" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="modal_join_event"><?php echo "Anmeldung für" . $event->getTitle(); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="#">
+                    <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                           placeholder="Titel" id="username_gen_admin">
+                    <small class="form-text">Trage hier Slotwünsche etc. ein</small>
+                    <?php
+                    if ($state === 1) {
+                        ?>
+                        <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                               placeholder="Titel" id="username_gen_admin">
+                        <small class="form-text">Trage hier deine Verspätungszeit und evtl. einen Grund ein</small>
+                        <?php
+                    }
+                    ?>
+                    <div class="modal-footer">
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    if (isset($_POST["submit"])) {
+        $title = $_POST["title"];
+        $text = $_POST["text"];
+        $date = $_POST["date"];
+        $type = $_POST["type"];
+        AdminPanelServices::getInstance()->getMariadb()->addEvent($title, $date, $type, $text);
+    }
+
+}
+
+    public function spawnJoinEventNo( $event_id, $user_id): void
+    {
+        //state:  0=yes 1=maybe 2=no 3=null
+        $event = AdminPanelServices::getInstance()->getMariadb()->findEvent($event_id);
+        $user = AdminPanelServices::getInstance()->getMariadb()->findUser($user_id);
+        ?>
+        <div class="modal fade" id="modal_join_event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="modal_join_event" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="modal_join_event"><?php echo "Anmeldung für" . $event->getTitle(); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="#">
+                        <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                               placeholder="Titel" id="username_gen_admin">
+                        <small class="form-text">Trage hier Slotwünsche etc. ein</small>
+                        <?php
+                        if ($state === 1) {
+                            ?>
+                            <input class="form-control" type="date" required pattern="\d{4}-\d{2}-\d{2}" name="date"
+                                   placeholder="Titel" id="username_gen_admin">
+                            <small class="form-text">Trage hier deine Verspätungszeit und evtl. einen Grund ein</small>
+                            <?php
+                        }
+                        ?>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit" name="submit">Erstellen</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        if (isset($_POST["submit"])) {
+            $title = $_POST["title"];
+            $text = $_POST["text"];
+            $date = $_POST["date"];
+            $type = $_POST["type"];
+            AdminPanelServices::getInstance()->getMariadb()->addEvent($title, $date, $type, $text);
+        }
+
+    }
+
 }
