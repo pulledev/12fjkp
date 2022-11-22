@@ -1,0 +1,14 @@
+Index: admin/event.php
+===================================================================
+diff --git a/admin/event.php b/admin/event.php
+--- a/admin/event.php	
++++ b/admin/event.php	
+@@ -5,7 +5,7 @@
+     header("Location: /admin/login.php");
+ }
+ 
+-Head::printHead("Eventerstller - Admin Panel","index.css");
++Head::printHead("Eventersteller - Admin Panel","index.css");
+ 
+ $id = AdminPanelServices::getInstance()->getSessionManager()->getLoggedInAdmin();
+ if(!$id)
